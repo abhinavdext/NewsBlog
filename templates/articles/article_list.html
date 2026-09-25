@@ -1,0 +1,659 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Articles - NewsBlog
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .container {
+        max-width: 1150px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+
+    /* ==============================
+       PAGE HEADER
+    ============================== */
+
+    .page-header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .page-header h1 {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    .page-header p {
+        color: #666;
+        font-size: 17px;
+    }
+
+
+    /* ==============================
+       SEARCH
+    ============================== */
+
+    .search-box {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        border: 1px solid #e1e5ea;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        margin-bottom: 25px;
+    }
+
+    .search-form {
+        display: flex;
+        gap: 10px;
+    }
+
+    .search-form input {
+        flex: 1;
+        padding: 13px 15px;
+        border: 1px solid #ccc;
+        border-radius: 7px;
+        font-size: 15px;
+    }
+
+    .search-form input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 2px rgba(0,123,255,0.1);
+    }
+
+    .search-form button {
+        padding: 13px 22px;
+        border: none;
+        border-radius: 7px;
+        background: #007bff;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+    .search-form button:hover {
+        background: #0056b3;
+    }
+
+
+    /* ==============================
+       CATEGORIES
+    ============================== */
+
+    .categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .categories a {
+        padding: 9px 16px;
+        background: white;
+        color: #333;
+        text-decoration: none;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+        font-size: 14px;
+        transition: 0.2s;
+    }
+
+    .categories a:hover {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+
+    /* ==============================
+       ARTICLE GRID
+    ============================== */
+
+    .article-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+
+    /* ==============================
+       ARTICLE CARD
+    ============================== */
+
+    .article-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid #e1e5ea;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .article-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+
+    /* ==============================
+       IMAGE FRAME
+    ============================== */
+
+    .image-frame {
+        width: 100%;
+        height: 240px;
+        padding: 10px;
+        background: #f1f3f5;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .article-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border: 2px solid #d1d5db;
+        border-radius: 8px;
+        background: white;
+        display: block;
+    }
+
+
+    /* ==============================
+       NO IMAGE
+    ============================== */
+
+    .no-image {
+        width: 100%;
+        height: 100%;
+        border: 2px dashed #c5c9ce;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        color: #777;
+        font-size: 15px;
+    }
+
+
+    /* ==============================
+       CARD CONTENT
+    ============================== */
+
+    .card-content {
+        padding: 22px;
+    }
+
+    .category {
+        display: inline-block;
+        padding: 5px 10px;
+        background: #e7f1ff;
+        border-radius: 15px;
+        font-size: 12px;
+        margin-bottom: 10px;
+    }
+
+    /* CLICKABLE CATEGORY */
+
+    .category a {
+        color: #007bff;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .category a:hover {
+        color: #0056b3;
+        text-decoration: underline;
+    }
+
+    .card-content h2 {
+        font-size: 22px;
+        margin: 5px 0 12px;
+        line-height: 1.3;
+    }
+
+    .card-content h2 a {
+        color: #222;
+        text-decoration: none;
+    }
+
+    .card-content h2 a:hover {
+        color: #007bff;
+    }
+
+    .description {
+        color: #666;
+        line-height: 1.6;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+
+    /* ==============================
+       META
+    ============================== */
+
+    .meta {
+        color: #888;
+        font-size: 13px;
+        margin-bottom: 18px;
+        line-height: 1.6;
+    }
+
+
+    /* ==============================
+       READ BUTTON
+    ============================== */
+
+    .read-btn {
+        display: inline-block;
+        padding: 10px 16px;
+        background: #007bff;
+        color: white;
+        text-decoration: none;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .read-btn:hover {
+        background: #0056b3;
+    }
+
+
+    /* ==============================
+       NO ARTICLES
+    ============================== */
+
+    .no-articles {
+        background: white;
+        padding: 50px 20px;
+        text-align: center;
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        color: #666;
+    }
+
+    .no-articles h2 {
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+
+    /* ==============================
+       PAGINATION
+    ============================== */
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 40px;
+        flex-wrap: wrap;
+    }
+
+    .pagination a,
+    .current-page {
+        min-width: 40px;
+        height: 40px;
+        padding: 0 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .pagination a {
+        background: white;
+        color: #333;
+        border: 1px solid #ddd;
+    }
+
+    .pagination a:hover {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+
+    .current-page {
+        background: #007bff;
+        color: white;
+        border: 1px solid #007bff;
+        font-weight: bold;
+    }
+
+
+    /* ==============================
+       MOBILE
+    ============================== */
+
+    @media (max-width: 900px) {
+
+        .article-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+
+    @media (max-width: 650px) {
+
+        .page-header h1 {
+            font-size: 32px;
+        }
+
+        .article-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .search-form {
+            flex-direction: column;
+        }
+
+        .search-form button {
+            width: 100%;
+        }
+
+        .image-frame {
+            height: 250px;
+        }
+
+    }
+
+</style>
+
+
+<div class="container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+
+        <h1>
+            Latest Articles
+        </h1>
+
+        <p>
+            Explore our latest news, tutorials and stories.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-box">
+
+        <form
+            method="GET"
+            class="search-form"
+        >
+
+            <input
+                type="text"
+                name="search"
+                placeholder="Search articles..."
+                value="{{ search|default:'' }}"
+            >
+
+            <button type="submit">
+                🔍 Search
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <!-- CATEGORIES -->
+
+    <div class="categories">
+
+        <a href="{% url 'article_list' %}">
+            All Articles
+        </a>
+
+
+        {% for category in categories %}
+
+            <a
+                href="?category={{ category.slug }}"
+            >
+                {{ category.name }}
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+
+    <!-- ARTICLES -->
+
+    {% if articles %}
+
+        <div class="article-grid">
+
+
+            {% for article in articles %}
+
+                <article class="article-card">
+
+
+                    <!-- IMAGE -->
+
+                    <div class="image-frame">
+
+                        {% if article.image %}
+
+                            <img
+                                src="{{ article.image.url }}"
+                                alt="{{ article.title }}"
+                                class="article-image"
+                            >
+
+                        {% else %}
+
+                            <div class="no-image">
+                                No Image Available
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- CONTENT -->
+
+                    <div class="card-content">
+
+
+                        <!-- CLICKABLE CATEGORY -->
+
+                        <span class="category">
+
+                            <a
+                                href="{% url 'category_articles' article.category.slug %}"
+                            >
+                                {{ article.category.name }}
+                            </a>
+
+                        </span>
+
+
+                        <!-- TITLE -->
+
+                        <h2>
+
+                            <a
+                                href="{% url 'article_detail' article.slug %}"
+                            >
+                                {{ article.title }}
+                            </a>
+
+                        </h2>
+
+
+                        <!-- DESCRIPTION -->
+
+                        <p class="description">
+
+                            {{ article.content|truncatewords:20 }}
+
+                        </p>
+
+
+                        <!-- META -->
+
+                        <div class="meta">
+
+                            By
+
+                            <strong>
+                                {{ article.author.username }}
+                            </strong>
+
+                            <br>
+
+                            👁 {{ article.views }} Views
+
+                            &nbsp; | &nbsp;
+
+                            📅
+
+                            {{ article.created_at|date:"d M Y" }}
+
+                        </div>
+
+
+                        <!-- READ BUTTON -->
+
+                        <a
+                            class="read-btn"
+                            href="{% url 'article_detail' article.slug %}"
+                        >
+                            Read Article →
+                        </a>
+
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+
+        </div>
+
+
+        <!-- PAGINATION -->
+
+        {% if articles.has_other_pages %}
+
+            <div class="pagination">
+
+
+                {% if articles.has_previous %}
+
+                    <a
+                        href="?page={{ articles.previous_page_number }}{% if search %}&search={{ search }}{% endif %}{% if category %}&category={{ category }}{% endif %}"
+                    >
+                        ← Previous
+                    </a>
+
+                {% endif %}
+
+
+                {% for num in articles.paginator.page_range %}
+
+                    {% if articles.number == num %}
+
+                        <span class="current-page">
+                            {{ num }}
+                        </span>
+
+                    {% else %}
+
+                        <a
+                            href="?page={{ num }}{% if search %}&search={{ search }}{% endif %}{% if category %}&category={{ category }}{% endif %}"
+                        >
+                            {{ num }}
+                        </a>
+
+                    {% endif %}
+
+                {% endfor %}
+
+
+                {% if articles.has_next %}
+
+                    <a
+                        href="?page={{ articles.next_page_number }}{% if search %}&search={{ search }}{% endif %}{% if category %}&category={{ category }}{% endif %}"
+                    >
+                        Next →
+                    </a>
+
+                {% endif %}
+
+
+            </div>
+
+        {% endif %}
+
+
+    {% else %}
+
+
+        <!-- NO ARTICLES -->
+
+        <div class="no-articles">
+
+            <h2>
+                No Articles Found
+            </h2>
+
+
+            {% if search %}
+
+                <p>
+
+                    No articles found for
+
+                    <strong>
+                        "{{ search }}"
+                    </strong>.
+
+                </p>
+
+            {% else %}
+
+                <p>
+                    There are currently no published articles.
+                </p>
+
+            {% endif %}
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}

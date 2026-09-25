@@ -1,0 +1,1000 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Account | ExatoFoundationBlog{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .register-page {
+
+        min-height:
+            calc(100vh - 145px);
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        padding: 45px 20px;
+
+        background:
+
+            radial-gradient(
+                circle at 5% 10%,
+                rgba(0,198,255,0.13),
+                transparent 28%
+            ),
+
+            radial-gradient(
+                circle at 95% 90%,
+                rgba(236,72,153,0.13),
+                transparent 30%
+            ),
+
+            linear-gradient(
+                135deg,
+                #f7fbff,
+                #faf7ff
+            );
+
+    }
+
+
+    .register-container {
+
+        width: 100%;
+
+        max-width: 1050px;
+
+        display: grid;
+
+        grid-template-columns:
+            0.85fr 1.15fr;
+
+        background:
+            rgba(255,255,255,0.94);
+
+        border-radius: 28px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 25px 70px
+            rgba(15,23,42,0.13);
+
+        border:
+            1px solid
+            rgba(255,255,255,0.8);
+
+    }
+
+
+    /* =====================================
+       LEFT BRAND PANEL
+    ===================================== */
+
+    .register-brand {
+
+        position: relative;
+
+        padding: 50px 40px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        overflow: hidden;
+
+        color: white;
+
+        background:
+
+            linear-gradient(
+                145deg,
+                #063b68,
+                #1267b1 40%,
+                #7c3aed 72%,
+                #db2777
+            );
+
+    }
+
+
+    .register-brand::before {
+
+        content: "";
+
+        position: absolute;
+
+        width: 300px;
+
+        height: 300px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(255,255,255,0.08);
+
+        top: -120px;
+
+        right: -120px;
+
+    }
+
+
+    .register-brand::after {
+
+        content: "";
+
+        position: absolute;
+
+        width: 200px;
+
+        height: 200px;
+
+        border-radius: 50%;
+
+        background:
+            rgba(0,198,255,0.13);
+
+        bottom: -90px;
+
+        left: -80px;
+
+    }
+
+
+    .register-brand-content {
+
+        position: relative;
+
+        z-index: 2;
+
+    }
+
+
+    .register-logo {
+
+        width: 72px;
+
+        height: 72px;
+
+        border-radius: 21px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 22px;
+
+        font-weight: 900;
+
+        letter-spacing: -1px;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                #00c6ff,
+                #0072ff 40%,
+                #8b5cf6 72%,
+                #ec4899
+            );
+
+        border:
+            2px solid
+            rgba(255,255,255,0.65);
+
+        box-shadow:
+
+            0 12px 30px
+            rgba(0,0,0,0.25),
+
+            inset 0 1px 2px
+            rgba(255,255,255,0.45);
+
+        margin-bottom: 28px;
+
+    }
+
+
+    .register-brand h1 {
+
+        margin: 0;
+
+        font-size: 32px;
+
+        line-height: 1.15;
+
+        letter-spacing: -1px;
+
+    }
+
+
+    .register-brand p {
+
+        margin-top: 17px;
+
+        color:
+            rgba(255,255,255,0.82);
+
+        font-size: 14px;
+
+        line-height: 1.7;
+
+    }
+
+
+    .community-card {
+
+        margin-top: 30px;
+
+        padding: 15px;
+
+        border-radius: 15px;
+
+        background:
+            rgba(255,255,255,0.10);
+
+        border:
+            1px solid
+            rgba(255,255,255,0.12);
+
+        backdrop-filter:
+            blur(10px);
+
+    }
+
+
+    .community-card-title {
+
+        font-size: 13px;
+
+        font-weight: 800;
+
+        margin-bottom: 5px;
+
+    }
+
+
+    .community-card-text {
+
+        font-size: 11px;
+
+        color:
+            rgba(255,255,255,0.72);
+
+        line-height: 1.5;
+
+    }
+
+
+    /* =====================================
+       FORM
+    ===================================== */
+
+    .register-form-panel {
+
+        padding: 48px;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+    }
+
+
+    .register-form-box {
+
+        width: 100%;
+
+        max-width: 500px;
+
+    }
+
+
+    .register-form-box h2 {
+
+        margin: 0;
+
+        color: #17202a;
+
+        font-size: 29px;
+
+        letter-spacing: -0.7px;
+
+    }
+
+
+    .register-subtitle {
+
+        margin-top: 7px;
+
+        margin-bottom: 25px;
+
+        color: #7b8794;
+
+        font-size: 13px;
+
+    }
+
+
+    .register-form {
+
+        display: grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 17px;
+
+    }
+
+
+    .form-group {
+
+        margin: 0;
+
+    }
+
+
+    .form-group.full {
+
+        grid-column:
+            1 / -1;
+
+    }
+
+
+    .form-group label {
+
+        display: block;
+
+        margin-bottom: 7px;
+
+        font-size: 13px;
+
+        font-weight: 700;
+
+        color: #344054;
+
+    }
+
+
+    .input-wrapper {
+
+        position: relative;
+
+    }
+
+
+    .input-icon {
+
+        position: absolute;
+
+        left: 13px;
+
+        top: 50%;
+
+        transform:
+            translateY(-50%);
+
+        font-size: 15px;
+
+        opacity: 0.65;
+
+        pointer-events: none;
+
+    }
+
+
+    .register-form input {
+
+        width: 100%;
+
+        height: 47px;
+
+        padding:
+            0 13px 0 41px;
+
+        border:
+            1px solid #dfe5ec;
+
+        border-radius: 11px;
+
+        background:
+            #f9fafb;
+
+        color: #17202a;
+
+        font-size: 13px;
+
+        outline: none;
+
+        transition:
+            all 0.25s ease;
+
+    }
+
+
+    .register-form input:focus {
+
+        background: #ffffff;
+
+        border-color: #1877f2;
+
+        box-shadow:
+            0 0 0 4px
+            rgba(24,119,242,0.09);
+
+    }
+
+
+    .register-form input::placeholder {
+
+        color: #a0a9b5;
+
+    }
+
+
+    .password-help {
+
+        margin-top: 5px;
+
+        font-size: 10px;
+
+        color: #8a94a6;
+
+    }
+
+
+    .register-button {
+
+        grid-column:
+            1 / -1;
+
+        width: 100%;
+
+        height: 49px;
+
+        margin-top: 5px;
+
+        border: none;
+
+        border-radius: 12px;
+
+        background:
+
+            linear-gradient(
+                135deg,
+                #1877f2,
+                #7c3aed
+            );
+
+        color: white;
+
+        font-size: 14px;
+
+        font-weight: 800;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 8px 20px
+            rgba(24,119,242,0.23);
+
+        transition:
+            all 0.25s ease;
+
+    }
+
+
+    .register-button:hover {
+
+        transform:
+            translateY(-2px);
+
+        box-shadow:
+            0 12px 25px
+            rgba(24,119,242,0.32);
+
+    }
+
+
+    .register-bottom {
+
+        text-align: center;
+
+        margin-top: 21px;
+
+        font-size: 13px;
+
+        color: #7b8794;
+
+    }
+
+
+    .register-bottom a {
+
+        color: #1877f2;
+
+        font-weight: 800;
+
+        text-decoration: none;
+
+    }
+
+
+    .register-bottom a:hover {
+
+        text-decoration: underline;
+
+    }
+
+
+    .form-errors {
+
+        grid-column:
+            1 / -1;
+
+        background:
+            #fff1f2;
+
+        color:
+            #be123c;
+
+        border:
+            1px solid #fecdd3;
+
+        border-radius: 10px;
+
+        padding: 10px 12px;
+
+        font-size: 12px;
+
+    }
+
+
+    /* =====================================
+       MOBILE
+    ===================================== */
+
+    @media (max-width: 800px) {
+
+        .register-container {
+
+            grid-template-columns:
+                1fr;
+
+            max-width: 550px;
+
+        }
+
+
+        .register-brand {
+
+            padding:
+                38px 30px;
+
+        }
+
+
+        .register-form-panel {
+
+            padding:
+                40px 30px;
+
+        }
+
+    }
+
+
+    @media (max-width: 550px) {
+
+        .register-page {
+
+            padding:
+                20px 12px;
+
+        }
+
+
+        .register-container {
+
+            border-radius:
+                20px;
+
+        }
+
+
+        .register-brand {
+
+            padding:
+                30px 23px;
+
+        }
+
+
+        .register-form-panel {
+
+            padding:
+                32px 22px;
+
+        }
+
+
+        .register-form {
+
+            grid-template-columns:
+                1fr;
+
+        }
+
+
+        .form-group.full {
+
+            grid-column:
+                auto;
+
+        }
+
+
+        .register-button {
+
+            grid-column:
+                auto;
+
+        }
+
+
+        .form-errors {
+
+            grid-column:
+                auto;
+
+        }
+
+
+        .register-brand h1 {
+
+            font-size:
+                27px;
+
+        }
+
+    }
+
+</style>
+
+
+<div class="register-page">
+
+    <div class="register-container">
+
+
+        <!-- =================================
+             BRAND PANEL
+        ================================== -->
+
+        <div class="register-brand">
+
+            <div class="register-brand-content">
+
+                <div class="register-logo">
+                    EFB
+                </div>
+
+
+                <h1>
+                    Join Our Community 🚀
+                </h1>
+
+
+                <p>
+
+                    Create your ExatoFoundationBlog account
+                    and become a part of a growing community
+                    of readers and writers.
+
+                </p>
+
+
+                <div class="community-card">
+
+                    <div class="community-card-title">
+
+                        🌟 Your account gives you more
+
+                    </div>
+
+
+                    <div class="community-card-text">
+
+                        Read stories, publish articles,
+                        save your favourite content,
+                        interact with authors and receive
+                        notifications.
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================
+             REGISTER FORM
+        ================================== -->
+
+        <div class="register-form-panel">
+
+            <div class="register-form-box">
+
+                <h2>
+                    Create Account
+                </h2>
+
+
+                <div class="register-subtitle">
+
+                    Fill in your details to get started
+
+                </div>
+
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="form-errors">
+
+                            {{ message }}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+
+                <form
+                    method="POST"
+                    class="register-form"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- USERNAME -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder="Choose a username"
+                                value="{{ old_username|default:'' }}"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- FIRST NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+                            First Name
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✨
+                            </span>
+
+                            <input
+                                type="text"
+                                name="first_name"
+                                placeholder="First name"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LAST NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Last Name
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                📝
+                            </span>
+
+                            <input
+                                type="text"
+                                name="last_name"
+                                placeholder="Last name"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                ✉️
+                            </span>
+
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Enter your email"
+                                value="{{ old_email|default:'' }}"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Create password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONFIRM PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Confirm Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔐
+                            </span>
+
+                            <input
+                                type="password"
+                                name="confirm_password"
+                                placeholder="Confirm password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CAPTCHA -->
+
+                    <div class="form-group full">
+
+                        <label>
+                            Security Verification
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🛡️
+                            </span>
+
+                            <input
+                                type="number"
+                                name="captcha"
+                                placeholder="{{ num1 }} + {{ num2 }} = ?"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="password-help">
+
+                        Use a strong password with a combination
+                        of letters, numbers and symbols.
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="register-button"
+                    >
+
+                        Create My Account →
+
+                    </button>
+
+                </form>
+
+
+                <div class="register-bottom">
+
+                    Already have an account?
+
+                    <a href="{% url 'login' %}">
+                        Login here
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,556 @@
+{% extends 'base.html' %}
+
+{% block title %}Login | ExatoFoundationBlog{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .auth-page {
+        min-height: calc(100vh - 145px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 20px;
+        background:
+            radial-gradient(circle at 10% 20%, rgba(0, 198, 255, 0.12), transparent 28%),
+            radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.12), transparent 30%),
+            linear-gradient(135deg, #f7fbff, #f8f5ff);
+    }
+
+    .auth-container {
+        width: 100%;
+        max-width: 980px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: rgba(255, 255, 255, 0.92);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow:
+            0 25px 70px rgba(15, 23, 42, 0.13);
+        border: 1px solid rgba(255,255,255,0.8);
+    }
+
+    /* LEFT SIDE */
+
+    .auth-brand-panel {
+        position: relative;
+        padding: 55px 45px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+
+        background:
+            linear-gradient(
+                145deg,
+                #063b68,
+                #1267b1 45%,
+                #5b21b6 78%,
+                #be185d
+            );
+
+        color: white;
+    }
+
+    .auth-brand-panel::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.08);
+        top: -100px;
+        right: -90px;
+    }
+
+    .auth-brand-panel::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(0,198,255,0.13);
+        bottom: -70px;
+        left: -70px;
+    }
+
+    .auth-panel-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .auth-logo {
+        width: 72px;
+        height: 72px;
+        border-radius: 21px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 22px;
+        font-weight: 900;
+        letter-spacing: -1px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #00c6ff,
+                #0072ff 40%,
+                #8b5cf6 72%,
+                #ec4899
+            );
+
+        border: 2px solid rgba(255,255,255,0.65);
+
+        box-shadow:
+            0 12px 30px rgba(0,0,0,0.25),
+            inset 0 1px 2px rgba(255,255,255,0.45);
+
+        margin-bottom: 28px;
+    }
+
+    .auth-brand-panel h1 {
+        margin: 0;
+        font-size: 34px;
+        line-height: 1.15;
+        letter-spacing: -1px;
+    }
+
+    .auth-brand-panel p {
+        margin-top: 18px;
+        color: rgba(255,255,255,0.82);
+        font-size: 15px;
+        line-height: 1.7;
+        max-width: 390px;
+    }
+
+    .auth-feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 28px;
+        font-size: 13px;
+        color: rgba(255,255,255,0.9);
+    }
+
+    .auth-feature-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: rgba(255,255,255,0.12);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* RIGHT SIDE */
+
+    .auth-form-panel {
+        padding: 55px 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .auth-form-box {
+        width: 100%;
+        max-width: 390px;
+    }
+
+    .auth-form-box h2 {
+        margin: 0;
+        color: #17202a;
+        font-size: 29px;
+        letter-spacing: -0.7px;
+    }
+
+    .auth-subtitle {
+        margin-top: 8px;
+        margin-bottom: 28px;
+        color: #7b8794;
+        font-size: 13px;
+    }
+
+    .form-group {
+        margin-bottom: 19px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #344054;
+    }
+
+    .input-wrapper {
+        position: relative;
+    }
+
+    .input-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        opacity: 0.65;
+        pointer-events: none;
+    }
+
+    .auth-form input {
+        width: 100%;
+        height: 48px;
+        padding: 0 15px 0 43px;
+
+        border: 1px solid #dfe5ec;
+        border-radius: 12px;
+
+        background: #f9fafb;
+
+        font-size: 14px;
+        color: #17202a;
+
+        outline: none;
+
+        transition: all 0.25s ease;
+    }
+
+    .auth-form input:focus {
+        background: #ffffff;
+        border-color: #1877f2;
+
+        box-shadow:
+            0 0 0 4px rgba(24,119,242,0.09);
+    }
+
+    .auth-form input::placeholder {
+        color: #a0a9b5;
+    }
+
+    .auth-button {
+        width: 100%;
+        height: 49px;
+
+        border: none;
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #1877f2,
+                #6d28d9
+            );
+
+        color: white;
+
+        font-size: 14px;
+        font-weight: 800;
+
+        cursor: pointer;
+
+        box-shadow:
+            0 8px 20px rgba(24,119,242,0.23);
+
+        transition: all 0.25s ease;
+    }
+
+    .auth-button:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 12px 25px rgba(24,119,242,0.32);
+    }
+
+    .auth-bottom {
+        text-align: center;
+        margin-top: 23px;
+        font-size: 13px;
+        color: #7b8794;
+    }
+
+    .auth-bottom a {
+        color: #1877f2;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .auth-bottom a:hover {
+        text-decoration: underline;
+    }
+
+    .auth-error {
+        background: #fff1f2;
+        color: #be123c;
+        border: 1px solid #fecdd3;
+        border-radius: 10px;
+        padding: 10px 12px;
+        margin-bottom: 18px;
+        font-size: 12px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 750px) {
+
+        .auth-container {
+            grid-template-columns: 1fr;
+            max-width: 520px;
+        }
+
+        .auth-brand-panel {
+            padding: 38px 30px;
+        }
+
+        .auth-brand-panel h1 {
+            font-size: 28px;
+        }
+
+        .auth-feature {
+            margin-top: 18px;
+        }
+
+        .auth-form-panel {
+            padding: 40px 30px;
+        }
+    }
+
+    @media (max-width: 450px) {
+
+        .auth-page {
+            padding: 25px 12px;
+        }
+
+        .auth-container {
+            border-radius: 20px;
+        }
+
+        .auth-brand-panel {
+            padding: 30px 24px;
+        }
+
+        .auth-form-panel {
+            padding: 35px 22px;
+        }
+
+        .auth-brand-panel p {
+            font-size: 13px;
+        }
+    }
+
+</style>
+
+
+<div class="auth-page">
+
+    <div class="auth-container">
+
+        <!-- LEFT -->
+
+        <div class="auth-brand-panel">
+
+            <div class="auth-panel-content">
+
+                <div class="auth-logo">
+                    EFB
+                </div>
+
+                <h1>
+                    Welcome Back 👋
+                </h1>
+
+                <p>
+                    Login to ExatoFoundationBlog and stay connected
+                    with the latest news, stories and ideas from our
+                    community.
+                </p>
+
+                <div class="auth-feature">
+
+                    <div class="auth-feature-icon">
+                        📰
+                    </div>
+
+                    <span>
+                        Discover interesting stories
+                    </span>
+
+                </div>
+
+                <div class="auth-feature">
+
+                    <div class="auth-feature-icon">
+                        ✍️
+                    </div>
+
+                    <span>
+                        Share your own articles
+                    </span>
+
+                </div>
+
+                <div class="auth-feature">
+
+                    <div class="auth-feature-icon">
+                        🔔
+                    </div>
+
+                    <span>
+                        Stay updated with notifications
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT -->
+
+        <div class="auth-form-panel">
+
+            <div class="auth-form-box">
+
+                <h2>
+                    Login
+                </h2>
+
+                <div class="auth-subtitle">
+                    Enter your credentials to continue
+                </div>
+
+
+                {% if messages %}
+
+                    {% for message in messages %}
+
+                        <div class="auth-error">
+                            {{ message }}
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+
+                <form
+                    method="POST"
+                    class="auth-form"
+                >
+
+                    {% csrf_token %}
+
+
+                    <!-- USERNAME -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Username
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                👤
+                            </span>
+
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder="Enter your username"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PASSWORD -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🔒
+                            </span>
+
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CAPTCHA -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Security Verification
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <span class="input-icon">
+                                🛡️
+                            </span>
+
+                            <input
+                                type="number"
+                                name="captcha"
+                                placeholder="{{ num1 }} + {{ num2 }} = ?"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- LOGIN BUTTON -->
+
+                    <button
+                        type="submit"
+                        class="auth-button"
+                    >
+
+                        Login to Account →
+
+                    </button>
+
+                </form>
+
+
+                <div class="auth-bottom">
+
+                    Don't have an account?
+
+                    <a href="{% url 'register' %}">
+                        Create Account
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

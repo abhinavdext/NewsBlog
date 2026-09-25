@@ -1,0 +1,308 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Articles - NewsBlog
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .my-articles-container {
+        max-width: 1100px;
+        margin: 50px auto;
+        padding: 0 20px;
+    }
+
+    .page-title {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 32px;
+    }
+
+    .page-description {
+        text-align: center;
+        color: #666;
+        margin-bottom: 35px;
+    }
+
+    .articles-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 25px;
+    }
+
+    .article-card {
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .article-image {
+        width: 100%;
+        height: 200px;
+        object-fit: contain;
+        background: #f5f5f5;
+    }
+
+    .article-content {
+        padding: 20px;
+    }
+
+    .category {
+        color: #007bff;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .article-title {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    .article-info {
+        color: #777;
+        font-size: 14px;
+        margin-bottom: 15px;
+    }
+
+    /* Buttons */
+
+    .button-group {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .read-btn {
+        display: inline-block;
+        background: #007bff;
+        color: white;
+        padding: 9px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .read-btn:hover {
+        background: #0056b3;
+    }
+
+    .edit-article-btn {
+        display: inline-block;
+        background: #ffc107;
+        color: #222;
+        padding: 9px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .edit-article-btn:hover {
+        background: #e0a800;
+    }
+
+    /* Delete Button */
+
+    .delete-article-btn {
+        display: inline-block;
+        background: #dc3545;
+        color: white;
+        padding: 9px 15px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .delete-article-btn:hover {
+        background: #b02a37;
+    }
+
+    .empty-message {
+        text-align: center;
+        background: white;
+        padding: 40px;
+        border-radius: 10px;
+    }
+
+    .create-btn {
+        display: inline-block;
+        margin-top: 15px;
+        background: #10b981;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .create-btn:hover {
+        background: #059669;
+    }
+
+    @media (max-width: 900px) {
+
+        .articles-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+    }
+
+    @media (max-width: 600px) {
+
+        .articles-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .button-group {
+            flex-direction: column;
+        }
+
+        .read-btn,
+        .edit-article-btn,
+        .delete-article-btn {
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+    }
+
+</style>
+
+
+<div class="my-articles-container">
+
+    <h1 class="page-title">
+        My Articles
+    </h1>
+
+    <p class="page-description">
+        Articles created by {{ user.username }}
+    </p>
+
+
+    {% if articles %}
+
+        <div class="articles-grid">
+
+            {% for article in articles %}
+
+                <div class="article-card">
+
+
+                    {% if article.image %}
+
+                        <img
+                            src="{{ article.image.url }}"
+                            alt="{{ article.title }}"
+                            class="article-image"
+                        >
+
+                    {% endif %}
+
+
+                    <div class="article-content">
+
+
+                        <div class="category">
+                            {{ article.category.name }}
+                        </div>
+
+
+                        <h2 class="article-title">
+                            {{ article.title }}
+                        </h2>
+
+
+                        <div class="article-info">
+
+                            Status:
+                            <strong>
+                                {{ article.get_status_display }}
+                            </strong>
+
+                            <br>
+
+                            Views:
+                            {{ article.views }}
+
+                            <br>
+
+                            Created:
+                            {{ article.created_at|date:"d M Y" }}
+
+                        </div>
+
+
+                        <!-- Buttons -->
+
+                        <div class="button-group">
+
+                            <!-- View Article -->
+
+                            <a
+                                href="{% url 'article_detail' article.slug %}"
+                                class="read-btn"
+                            >
+                                View Article →
+                            </a>
+
+
+                            <!-- Edit Article -->
+
+                            <a
+                                href="{% url 'edit_article' article.slug %}"
+                                class="edit-article-btn"
+                            >
+                                ✏️ Edit
+                            </a>
+
+
+                            <!-- Delete Article -->
+
+                            <a
+                                href="{% url 'delete_article' article.slug %}"
+                                class="delete-article-btn"
+                            >
+                                🗑️ Delete
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty-message">
+
+            <h2>
+                You haven't created any articles yet.
+            </h2>
+
+            <p>
+                Start writing your first article today.
+            </p>
+
+            <a
+                href="{% url 'create_article' %}"
+                class="create-btn"
+            >
+                + Create Article
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

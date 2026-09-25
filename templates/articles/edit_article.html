@@ -1,0 +1,339 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Edit Article - NewsBlog
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+    .edit-container {
+
+        max-width: 800px;
+
+        margin: 50px auto;
+
+        padding: 0 20px;
+
+    }
+
+
+    .edit-card {
+
+        background: white;
+
+        padding: 35px;
+
+        border-radius: 12px;
+
+        border: 1px solid #e1e5ea;
+
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+
+    }
+
+
+    .edit-card h1 {
+
+        margin-top: 0;
+
+        margin-bottom: 10px;
+
+        font-size: 32px;
+
+    }
+
+
+    .description {
+
+        color: #777;
+
+        margin-bottom: 30px;
+
+    }
+
+
+    .form-group {
+
+        margin-bottom: 22px;
+
+    }
+
+
+    .form-group label {
+
+        display: block;
+
+        margin-bottom: 8px;
+
+        font-weight: bold;
+
+        color: #333;
+
+    }
+
+
+    .form-group input,
+
+    .form-group textarea,
+
+    .form-group select {
+
+        width: 100%;
+
+        padding: 12px;
+
+        border: 1px solid #ccc;
+
+        border-radius: 7px;
+
+        font-size: 15px;
+
+        font-family: Arial, sans-serif;
+
+    }
+
+
+    .form-group textarea {
+
+        min-height: 250px;
+
+        resize: vertical;
+
+    }
+
+
+    .form-group input:focus,
+
+    .form-group textarea:focus,
+
+    .form-group select:focus {
+
+        outline: none;
+
+        border-color: #007bff;
+
+    }
+
+
+    .current-image {
+
+        margin-bottom: 20px;
+
+    }
+
+
+    .current-image p {
+
+        font-weight: bold;
+
+        margin-bottom: 10px;
+
+    }
+
+
+    .current-image img {
+
+        max-width: 250px;
+
+        max-height: 180px;
+
+        object-fit: contain;
+
+        border: 1px solid #ddd;
+
+        border-radius: 8px;
+
+        background: #f5f5f5;
+
+        padding: 5px;
+
+    }
+
+
+    .button-group {
+
+        display: flex;
+
+        gap: 12px;
+
+        margin-top: 30px;
+
+    }
+
+
+    .save-btn {
+
+        border: none;
+
+        background: #007bff;
+
+        color: white;
+
+        padding: 11px 20px;
+
+        border-radius: 7px;
+
+        font-weight: bold;
+
+        cursor: pointer;
+
+        font-size: 15px;
+
+    }
+
+
+    .save-btn:hover {
+
+        background: #0056b3;
+
+    }
+
+
+    .cancel-btn {
+
+        display: inline-block;
+
+        background: #6c757d;
+
+        color: white;
+
+        padding: 11px 20px;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-weight: bold;
+
+        font-size: 15px;
+
+    }
+
+
+    .cancel-btn:hover {
+
+        background: #545b62;
+
+    }
+
+
+    .errorlist {
+
+        color: #dc3545;
+
+        margin: 5px 0;
+
+        padding-left: 20px;
+
+    }
+
+
+    @media (max-width: 650px) {
+
+        .edit-card {
+
+            padding: 22px;
+
+        }
+
+
+        .edit-card h1 {
+
+            font-size: 27px;
+
+        }
+
+
+        .button-group {
+
+            flex-direction: column;
+
+        }
+
+
+        .save-btn,
+
+        .cancel-btn {
+
+            text-align: center;
+
+            width: 100%;
+
+        }
+
+    }
+
+</style>
+
+
+<div class="edit-container">
+
+    <div class="edit-card">
+
+        <h1>
+            ✏️ Edit Article
+        </h1>
+
+        <p class="description">
+            Update your article details below.
+        </p>
+
+
+        <form
+            method="POST"
+            enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+
+
+            {% for field in form %}
+
+                <div class="form-group">
+
+                    {{ field.label_tag }}
+
+                    {{ field }}
+
+                    {% if field.errors %}
+
+                        {{ field.errors }}
+
+                    {% endif %}
+
+                </div>
+
+            {% endfor %}
+
+
+            <div class="button-group">
+
+                <button
+                    type="submit"
+                    class="save-btn"
+                >
+                    💾 Save Changes
+                </button>
+
+
+                <a
+                    href="{% url 'article_detail' article.slug %}"
+                    class="cancel-btn"
+                >
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}ExatoFoundationBlog{% endblock %}
+    </title>
+
+
+    <style>
+
+        /* =====================================
+           GLOBAL
+        ===================================== */
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f3f5f7;
+
+            color: #17202a;
+
+        }
+
+
+        /* =====================================
+           NAVBAR
+        ===================================== */
+
+        .navbar {
+
+            min-height: 72px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffffff 0%,
+                    #f8fbff 100%
+                );
+
+            border-bottom: 1px solid #e3e8ef;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 32px;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            box-shadow:
+                0 3px 18px
+                rgba(15, 23, 42, 0.06);
+
+        }
+
+
+        /* =====================================
+           BRAND
+        ===================================== */
+
+        .brand {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            text-decoration: none;
+
+            min-width: 250px;
+
+        }
+
+
+        /* =====================================
+           PREMIUM EFB LOGO
+        ===================================== */
+
+        .brand-logo {
+
+            width: 52px;
+
+            height: 52px;
+
+            min-width: 52px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #00c6ff 0%,
+                    #0072ff 35%,
+                    #6d28d9 68%,
+                    #ec4899 100%
+                );
+
+            color: #ffffff;
+
+            font-family:
+                Inter,
+                "Segoe UI",
+                Arial,
+                sans-serif;
+
+            font-size: 17px;
+
+            font-weight: 950;
+
+            letter-spacing: -1.2px;
+
+            border:
+                2px solid
+                rgba(255, 255, 255, 0.65);
+
+            box-shadow:
+
+                0 8px 20px
+                rgba(37, 99, 235, 0.28),
+
+                0 0 0 1px
+                rgba(99, 102, 241, 0.08),
+
+                inset 0 1px 1px
+                rgba(255, 255, 255, 0.45);
+
+            backdrop-filter: blur(10px);
+
+            overflow: hidden;
+
+            text-shadow:
+                0 2px 4px
+                rgba(0, 0, 0, 0.25);
+
+            transition:
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+
+        }
+
+
+        /* =====================================
+           LOGO GLOSSY SHINE
+        ===================================== */
+
+        .brand-logo::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 80px;
+
+            height: 22px;
+
+            top: -9px;
+
+            left: -15px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent,
+                    rgba(255,255,255,0.45),
+                    transparent
+                );
+
+            transform:
+                rotate(-28deg);
+
+            filter: blur(2px);
+
+        }
+
+
+        /* =====================================
+           LOGO SMALL GLOW
+        ===================================== */
+
+        .brand-logo::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 35px;
+
+            height: 35px;
+
+            right: -14px;
+
+            bottom: -14px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.22);
+
+            filter: blur(2px);
+
+        }
+
+
+        /* =====================================
+           LOGO HOVER
+        ===================================== */
+
+        .brand-logo:hover {
+
+            transform:
+                translateY(-3px)
+                scale(1.05)
+                rotate(-2deg);
+
+            box-shadow:
+
+                0 13px 28px
+                rgba(37, 99, 235, 0.38),
+
+                0 0 22px
+                rgba(139, 92, 246, 0.22),
+
+                inset 0 1px 2px
+                rgba(255, 255, 255, 0.55);
+
+        }
+
+
+        /* =====================================
+           BRAND TEXT
+        ===================================== */
+
+        .brand-info {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .brand-name {
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+            line-height: 1.1;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #0f4c81,
+                    #1877f2
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+        }
+
+
+        .brand-tagline {
+
+            font-size: 9px;
+
+            color: #8994a3;
+
+            margin-top: 4px;
+
+            letter-spacing: 0.5px;
+
+            text-transform: uppercase;
+
+        }
+
+
+        /* =====================================
+           SEARCH
+        ===================================== */
+
+        .navbar-search {
+
+            flex: 1;
+
+            max-width: 440px;
+
+            margin-left: 30px;
+
+        }
+
+
+        .navbar-search form {
+
+            width: 100%;
+
+            margin: 0;
+
+        }
+
+
+        .search-wrapper {
+
+            position: relative;
+
+            width: 100%;
+
+        }
+
+
+        .search-icon {
+
+            position: absolute;
+
+            left: 15px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            font-size: 15px;
+
+            color: #7b8794;
+
+            pointer-events: none;
+
+        }
+
+
+        .navbar-search input {
+
+            width: 100%;
+
+            height: 43px;
+
+            border:
+                1px solid transparent;
+
+            outline: none;
+
+            background: #eef2f6;
+
+            border-radius: 23px;
+
+            padding:
+                0 18px 0 43px;
+
+            font-size: 14px;
+
+            color: #17202a;
+
+            caret-color: #1877f2;
+
+            transition:
+                all 0.25s ease;
+
+        }
+
+
+        .navbar-search input::placeholder {
+
+            color: #7b8794;
+
+            opacity: 1;
+
+        }
+
+
+        .navbar-search input:focus {
+
+            background: #ffffff;
+
+            border-color: #1877f2;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(24, 119, 242, 0.10);
+
+        }
+
+
+        /* =====================================
+           NAVIGATION
+        ===================================== */
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 4px;
+
+            margin-left: auto;
+
+        }
+
+
+        .nav-links > a {
+
+            text-decoration: none;
+
+            color: #475467;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            padding: 9px 11px;
+
+            border-radius: 9px;
+
+            white-space: nowrap;
+
+            transition:
+                all 0.2s ease;
+
+        }
+
+
+        .nav-links > a:hover {
+
+            background: #edf4fc;
+
+            color: #1877f2;
+
+        }
+
+
+        /* =====================================
+           CREATE BUTTON
+        ===================================== */
+
+        .create-article-btn {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1877f2,
+                    #1467d8
+                ) !important;
+
+            color: #ffffff !important;
+
+            padding:
+                9px 16px !important;
+
+            border-radius:
+                9px !important;
+
+            box-shadow:
+                0 5px 12px
+                rgba(24, 119, 242, 0.20);
+
+        }
+
+
+        .create-article-btn:hover {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #166fe5,
+                    #0f5bc5
+                ) !important;
+
+            color: #ffffff !important;
+
+            transform:
+                translateY(-1px);
+
+            box-shadow:
+                0 7px 16px
+                rgba(24, 119, 242, 0.27);
+
+        }
+
+
+        /* =====================================
+           NOTIFICATION
+        ===================================== */
+
+        .notification-link {
+
+            position: relative;
+
+            width: 40px;
+
+            height: 40px;
+
+            display: inline-flex !important;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px !important;
+
+            padding: 0 !important;
+
+        }
+
+
+        .notification-link:hover {
+
+            background:
+                #fff1f2 !important;
+
+            color:
+                #e11d48 !important;
+
+        }
+
+
+        .notification-badge {
+
+            position: absolute;
+
+            top: 0;
+
+            right: -1px;
+
+            min-width: 18px;
+
+            height: 18px;
+
+            padding: 0 5px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #e53935;
+
+            color: white;
+
+            border:
+                2px solid #ffffff;
+
+            border-radius: 50px;
+
+            font-size: 9px;
+
+            font-weight: 800;
+
+        }
+
+
+        /* =====================================
+           PROFILE DROPDOWN
+        ===================================== */
+
+        .profile-dropdown {
+
+            position: relative;
+
+            margin-left: 6px;
+
+        }
+
+
+        .profile-button {
+
+            display: flex !important;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 5px 8px !important;
+
+            border-radius: 10px !important;
+
+            text-decoration: none;
+
+            color: #344054 !important;
+
+        }
+
+
+        .profile-button:hover {
+
+            background:
+                #eef4fb !important;
+
+        }
+
+
+        .profile-arrow {
+
+            font-size: 9px;
+
+            color: #667085;
+
+            transition: 0.2s ease;
+
+        }
+
+
+        .profile-dropdown:hover
+        .profile-arrow {
+
+            transform:
+                rotate(180deg);
+
+        }
+
+
+        /* =====================================
+           USER AVATAR
+        ===================================== */
+
+        .user-avatar {
+
+            width: 37px;
+
+            height: 37px;
+
+            min-width: 37px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f4c81,
+                    #1877f2,
+                    #55aaff
+                );
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 14px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 4px 10px
+                rgba(24, 119, 242, 0.20);
+
+        }
+
+
+        .welcome {
+
+            font-size: 13px;
+
+            color: #344054;
+
+            font-weight: 600;
+
+            max-width: 90px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* =====================================
+           PROFILE MENU
+        ===================================== */
+
+        .profile-menu {
+
+            position: absolute;
+
+            top:
+                calc(100% + 11px);
+
+            right: 0;
+
+            width: 250px;
+
+            background: #ffffff;
+
+            border:
+                1px solid #e4e7eb;
+
+            border-radius: 15px;
+
+            padding: 8px;
+
+            box-shadow:
+                0 16px 40px
+                rgba(15, 23, 42, 0.14);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform:
+                translateY(-8px);
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease,
+                visibility 0.2s ease;
+
+        }
+
+
+        .profile-dropdown:hover
+        .profile-menu {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform:
+                translateY(0);
+
+        }
+
+
+        /* =====================================
+           PROFILE HEADER
+        ===================================== */
+
+        .profile-menu-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            padding: 12px;
+
+            border-bottom:
+                1px solid #edf0f2;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .profile-menu-avatar {
+
+            width: 44px;
+
+            height: 44px;
+
+            min-width: 44px;
+
+            border-radius: 50%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f4c81,
+                    #1877f2
+                );
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 16px;
+
+            font-weight: 800;
+
+        }
+
+
+        .profile-menu-user {
+
+            display: flex;
+
+            flex-direction: column;
+
+            min-width: 0;
+
+        }
+
+
+        .profile-menu-username {
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            color: #17202a;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+        }
+
+
+        .profile-menu-email {
+
+            font-size: 11px;
+
+            color: #8a94a6;
+
+            margin-top: 3px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+        }
+
+
+        /* =====================================
+           DROPDOWN LINKS
+        ===================================== */
+
+        .profile-menu a {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            width: 100%;
+
+            padding: 10px 11px;
+
+            border-radius: 9px;
+
+            text-decoration: none;
+
+            color: #344054;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition:
+                all 0.2s ease;
+
+        }
+
+
+        .profile-menu a:hover {
+
+            background: #f0f4f8;
+
+            color: #1877f2;
+
+            transform:
+                translateX(2px);
+
+        }
+
+
+        /* =====================================
+           DROPDOWN LOGOUT
+        ===================================== */
+
+        .profile-menu
+        .dropdown-logout {
+
+            color: #d92d20;
+
+            margin-top: 5px;
+
+            padding-top: 11px;
+
+            border-top:
+                1px solid #edf0f2;
+
+            border-radius:
+                0 0 9px 9px;
+
+        }
+
+
+        .profile-menu
+        .dropdown-logout:hover {
+
+            background: #fff1f0;
+
+            color: #b42318;
+
+        }
+
+
+        /* =====================================
+           MAIN
+        ===================================== */
+
+        .main-content {
+
+            min-height:
+                calc(100vh - 150px);
+
+        }
+
+
+        /* =====================================
+           DJANGO MESSAGES
+        ===================================== */
+
+        .messages {
+
+            max-width: 1180px;
+
+            margin: 18px auto;
+
+            padding: 0 20px;
+
+        }
+
+
+        .message {
+
+            padding: 13px 17px;
+
+            background: #ffffff;
+
+            border:
+                1px solid #e4e7eb;
+
+            border-radius: 10px;
+
+            margin-bottom: 8px;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0, 0, 0, 0.03);
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .footer {
+
+            margin-top: 60px;
+
+            padding: 30px 20px;
+
+            text-align: center;
+
+            background: #ffffff;
+
+            border-top:
+                1px solid #e4e7eb;
+
+            color: #7b8794;
+
+            font-size: 13px;
+
+        }
+
+
+        .footer p {
+
+            margin: 0;
+
+        }
+
+
+        .footer-brand {
+
+            color: #1877f2;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================
+           TABLET
+        ===================================== */
+
+        @media (max-width: 1200px) {
+
+            .navbar {
+
+                padding:
+                    0 20px;
+
+            }
+
+
+            .brand {
+
+                min-width: 190px;
+
+            }
+
+
+            .brand-tagline {
+
+                display: none;
+
+            }
+
+
+            .navbar-search {
+
+                margin-left: 20px;
+
+                max-width: 300px;
+
+            }
+
+
+            .nav-links > a {
+
+                padding:
+                    8px 7px;
+
+                font-size: 12px;
+
+            }
+
+        }
+
+
+        /* =====================================
+           MOBILE
+        ===================================== */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+
+                min-height: 70px;
+
+                padding:
+                    12px 16px;
+
+                flex-wrap: wrap;
+
+                gap: 10px;
+
+            }
+
+
+            .brand {
+
+                min-width: auto;
+
+            }
+
+
+            .brand-name {
+
+                font-size: 18px;
+
+            }
+
+
+            .navbar-search {
+
+                order: 3;
+
+                width: 100%;
+
+                max-width: none;
+
+                margin: 0;
+
+            }
+
+
+            .nav-links {
+
+                margin-left: auto;
+
+            }
+
+
+            .welcome {
+
+                display: none;
+
+            }
+
+        }
+
+
+        /* =====================================
+           SMALL MOBILE
+        ===================================== */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+
+                justify-content: center;
+
+            }
+
+
+            .brand {
+
+                width: 100%;
+
+                justify-content: center;
+
+            }
+
+
+            .nav-links {
+
+                width: 100%;
+
+                justify-content: center;
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .nav-links > a {
+
+                font-size: 12px;
+
+                padding:
+                    7px 8px;
+
+            }
+
+
+            .create-article-btn {
+
+                padding:
+                    7px 10px !important;
+
+            }
+
+
+            .profile-dropdown {
+
+                margin-left: 0;
+
+            }
+
+
+            .profile-menu {
+
+                position: fixed;
+
+                top: 135px;
+
+                right: 15px;
+
+                width:
+                    calc(100% - 30px);
+
+                max-width: 300px;
+
+            }
+
+
+            .brand-logo {
+
+                width: 50px;
+
+                height: 50px;
+
+                min-width: 50px;
+
+                font-size: 16px;
+
+            }
+
+        }
+
+
+        /* =====================================
+           VERY SMALL MOBILE
+        ===================================== */
+
+        @media (max-width: 400px) {
+
+            .brand-name {
+
+                font-size: 16px;
+
+            }
+
+
+            .brand-logo {
+
+                width: 47px;
+
+                height: 47px;
+
+                min-width: 47px;
+
+                font-size: 15px;
+
+            }
+
+
+            .nav-links > a {
+
+                font-size: 11px;
+
+                padding: 6px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     NAVBAR
+===================================== -->
+
+<nav class="navbar">
+
+
+    <!-- =================================
+         BRAND
+    ================================== -->
+
+    <a
+        href="/"
+        class="brand"
+    >
+
+        <div class="brand-logo">
+
+            EFB
+
+        </div>
+
+
+        <div class="brand-info">
+
+            <span class="brand-name">
+
+                ExatoFoundationBlog
+
+            </span>
+
+
+            <span class="brand-tagline">
+
+                News • Stories • Ideas
+
+            </span>
+
+        </div>
+
+    </a>
+
+
+    <!-- =================================
+         SEARCH
+    ================================== -->
+
+    <div class="navbar-search">
+
+        <form
+            action="{% url 'article_list' %}"
+            method="GET"
+        >
+
+            <div class="search-wrapper">
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search articles, topics..."
+                    autocomplete="off"
+                >
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- =================================
+         NAVIGATION
+    ================================== -->
+
+    <div class="nav-links">
+
+
+        <!-- HOME -->
+
+        <a
+            href="/"
+            title="Home"
+        >
+
+            🏠 Home
+
+        </a>
+
+
+        <!-- ARTICLES -->
+
+        <a
+            href="{% url 'article_list' %}"
+            title="Articles"
+        >
+
+            📰 Articles
+
+        </a>
+
+
+        {% if user.is_authenticated %}
+
+
+            <!-- CREATE -->
+
+            <a
+                href="{% url 'create_article' %}"
+                class="create-article-btn"
+                title="Create Article"
+            >
+
+                ✍ Create
+
+            </a>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a
+                href="{% url 'notifications' %}"
+                class="notification-link"
+                title="Notifications"
+            >
+
+                🔔
+
+
+                {% if unread_notifications_count > 0 %}
+
+                    <span
+                        class="notification-badge"
+                    >
+
+                        {{ unread_notifications_count }}
+
+                    </span>
+
+                {% endif %}
+
+            </a>
+
+
+            <!-- =================================
+                 PROFILE DROPDOWN
+            ================================== -->
+
+            <div class="profile-dropdown">
+
+
+                <!-- PROFILE BUTTON -->
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="profile-button"
+                    title="Profile Menu"
+                >
+
+                    <div class="user-avatar">
+
+                        {{ user.username|first|upper }}
+
+                    </div>
+
+
+                    <span class="welcome">
+
+                        {{ user.username }}
+
+                    </span>
+
+
+                    <span class="profile-arrow">
+
+                        ▼
+
+                    </span>
+
+                </a>
+
+
+                <!-- =================================
+                     PROFILE MENU
+                ================================== -->
+
+                <div class="profile-menu">
+
+
+                    <!-- USER INFO -->
+
+                    <div class="profile-menu-header">
+
+
+                        <div class="profile-menu-avatar">
+
+                            {{ user.username|first|upper }}
+
+                        </div>
+
+
+                        <div class="profile-menu-user">
+
+                            <span
+                                class="profile-menu-username"
+                            >
+
+                                {{ user.username }}
+
+                            </span>
+
+
+                            <span
+                                class="profile-menu-email"
+                            >
+
+                                {{ user.email }}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PROFILE -->
+
+                    <a
+                        href="{% url 'profile' %}"
+                    >
+
+                        👤
+
+                        <span>
+                            My Profile
+                        </span>
+
+                    </a>
+
+
+                    <!-- DASHBOARD -->
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                    >
+
+                        📊
+
+                        <span>
+                            Dashboard
+                        </span>
+
+                    </a>
+
+
+                    <!-- MY ARTICLES -->
+
+                    <a
+                        href="{% url 'my_articles' %}"
+                    >
+
+                        📚
+
+                        <span>
+                            My Articles
+                        </span>
+
+                    </a>
+
+
+                    <!-- SAVED -->
+
+                    <a
+                        href="{% url 'my_bookmarks' %}"
+                    >
+
+                        🔖
+
+                        <span>
+                            Saved Articles
+                        </span>
+
+                    </a>
+
+
+                    <!-- NOTIFICATIONS -->
+
+                    <a
+                        href="{% url 'notifications' %}"
+                    >
+
+                        🔔
+
+                        <span>
+
+                            Notifications
+
+                            {% if unread_notifications_count > 0 %}
+
+                                ({{ unread_notifications_count }})
+
+                            {% endif %}
+
+                        </span>
+
+                    </a>
+
+
+                    <!-- LOGOUT -->
+
+                    <a
+                        href="{% url 'logout' %}"
+                        class="dropdown-logout"
+                    >
+
+                        🚪
+
+                        <span>
+                            Logout
+                        </span>
+
+                    </a>
+
+
+                </div>
+
+            </div>
+
+
+        {% else %}
+
+
+            <!-- LOGIN -->
+
+            <a
+                href="{% url 'login' %}"
+            >
+
+                Login
+
+            </a>
+
+
+            <!-- REGISTER -->
+
+            <a
+                href="{% url 'register' %}"
+                class="create-article-btn"
+            >
+
+                Register
+
+            </a>
+
+
+        {% endif %}
+
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================
+     DJANGO MESSAGES
+===================================== -->
+
+{% if messages %}
+
+    <div class="messages">
+
+        {% for message in messages %}
+
+            <div class="message">
+
+                {{ message }}
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% endif %}
+
+
+<!-- =====================================
+     MAIN CONTENT
+===================================== -->
+
+<main class="main-content">
+
+    {% block content %}
+
+    {% endblock %}
+
+</main>
+
+
+<!-- =====================================
+     FOOTER
+===================================== -->
+
+<footer class="footer">
+
+    <p>
+
+        © 2026
+
+        <span class="footer-brand">
+
+            ExatoFoundationBlog
+
+        </span>
+
+        · News • Stories • Ideas
+
+    </p>
+
+</footer>
+
+
+</body>
+
+</html>
